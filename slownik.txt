@@ -1,0 +1,5 @@
+makroprocesor
+mikroprocesor
+ale
+amma
+amigo
