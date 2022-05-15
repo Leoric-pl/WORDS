@@ -2,78 +2,151 @@
 #include <fstream>
 #include <conio.h>
 #include <string>
-int locznik=0;
+
+std::string WhichInSeq(std::string word1,std::string word2)
+{
+    int counterS=0;
+    std::string res="";
+    for (int conuterL=0;conuterL<word2.length();conuterL++)
+    {
+        if(word1[counterS]==word2[conuterL])
+        {
+            res+=word1[counterS];
+        }
+    }
+    return res;
+} 
+
 void showAllSeq(std::string word1,std::string word2)
 {
-    locznik++;
     for (int a=0;a<word2.length()-1;a++)
     {
-        if(a==0)
-            {
-            showAllSeq(word1,word2.substr(1,word2.length()-a));
-            }
-        else{
-            showAllSeq(word1+word2.substr(0,a),word2.substr(a+1,word2.length()-a-1));
-            }
+        if(a==0)showAllSeq(word1,word2.substr(1,word2.length()-a));
+        else showAllSeq(word1+word2.substr(0,a),word2.substr(a+1,word2.length()-a-1));   
     }
 }
 
 void showAllSeq(std::string word)
 {
-    locznik++;
-    //std::string newSeq1;
-    //std::cout<<word<<"\n";
     for (int a=0;a<word.length()-1;a++)
     {
-        if(a==0)
-            {
-            showAllSeq(word.substr(1,word.length()-a));
-            }
-        else{
-            showAllSeq(word.substr(0,a),word.substr(a+1,word.length()-a-1));
-        
-    }
-    //std::cout<<newSeq1<<"\n";
+        if(a==0) showAllSeq(word.substr(1,word.length()-a));
+        else showAllSeq(word.substr(0,a),word.substr(a+1,word.length()-a-1));
     }
 }
-void showAllSeqb(std::string napis)
+std::string getAllSeq(std::string word1,std::string word2,std::string word3,std::string moist)
 {
-    std::string newSeq1;
-    //std::string newSeq1;
-    for (int a=0;a<napis.length()-1;a++)
+    std::string most=WhichInSeq(word1+word2,word3);
+    if(most.length()>moist.length())moist=most;
+    for (int a=0;a<word2.length()-1;a++)
     {
-        if(a==0)
-            {
-            newSeq1=napis.substr(1,napis.length()-a);
-            }
-        else{
-            newSeq1=napis.substr(0,a)+napis.substr(a+1,napis.length()-a-1);
-        showAllSeqb(newSeq1);
+        if(a==0)most=getAllSeq(word1,word2.substr(1,word2.length()-a),word3,moist);
+        else most=getAllSeq(word1+word2.substr(0,a),word2.substr(a+1,word2.length()-a-1),word3,moist); 
+        if(most.length()>moist.length())moist=most;  
     }
-    //std::cout<<newSeq1<<"\n";
-    }
+    return moist;
 }
 
+std::string getAllSeq(std::string word,std::string word3,std::string moist)
+{
+    std::string most=WhichInSeq(word,word3);
+    if(most.length()>moist.length())moist=most;
+    for (int a=0;a<word.length()-1;a++)
+    {
+        if(a==0) most=getAllSeq(word.substr(1,word.length()-a),word3,moist);
+        else most=getAllSeq(word.substr(0,a),word.substr(a+1,word.length()-a-1),word3,moist);
+        if(most.length()>moist.length())moist=most;
+    }
+    return moist;
+}
+
+std::string mergeWords(std::string wordA, std::string wordB)
+{
+    std::string commonPart=getAllSeq(wordA,wordB,"");
+    int shortC=0;
+    int longC=0;
+    int CommonP=0;
+    std::string result="";
+    int sum=wordA.length()+wordB.length()-commonPart.length();
+    for (int i=0;i<sum;i++){
+        if (longC==wordB.length())return result;
+        if (shortC==wordA.length()) {
+            result+=wordB[longC];
+            longC+=1;
+        }
+        else if (wordA[shortC]==wordB[longC]){      result+=wordB[shortC];
+            shortC+=1;
+            longC+=1;
+            CommonP+=1;      
+            }
+        else if (CommonP==commonPart.length()){
+            result+=wordA[shortC];
+            shortC+=1;}
+        else if (wordA[shortC]==commonPart[CommonP] && wordB[longC]!=commonPart[CommonP]){
+            result+=wordB[longC];
+            longC+=1;}
+        else
+            {result+=wordA[shortC];
+            shortC+=1;}
+        }
+    return result;
+}
+
+
+std::string makeMixedKey()
+{
+    std::cout<<"making key!\n";
+    std::string key=" ";
+    std::string napis;
+    int countera=0;
+    int counterb=0;
+    std::fstream file;
+    file.open("slowa/byLength.txt",std::ios::in);
+    while(!file.eof())
+        {  
+            getline(file,napis);
+        countera+=1;
+        if(countera%100==0)
+        {
+            counterb+=1;
+            std::cout<<counterb<<"\n";
+        }
+        key=mergeWords(napis,key);
+        }
+    file.close();
+    std::cout<<"key"<<key<<"\n";
+    return key;
+}
+void sortdict()
+{
+    std::fstream in,out;
+    std::string napis;
+    int max=0;
+    in.open("slowa/slowaBasedCharacter.txt",std::ios::in);
+    out.open("slowa/byLength.txt",std::ios::out);
+    while(!in.eof())
+        {  
+        getline(in,napis);
+        if(napis.length()>max)max=napis.length();
+        }
+    in.close();
+    for (int a=max;a>0;a--)
+    {
+        std::cout<<"a: "<<a<<"\n";
+        in.open("slowa/slowaBasedCharacter.txt",std::ios::in);
+        while(!in.eof())
+        {
+            getline(in,napis);
+            if(napis.length()==a)out<<napis<<"\n";
+        }
+        in.close();
+    }
+
+}
 int main()
 {
-    //std::fstream reader;
-    //reader.open("slownik.txt",std::ios::in);
-    std::string napis;
-    /*if( reader.good())
-    {
-        printf("Uzyskano dostep do pliku!\n");
-        while(!reader.eof())
-        {
-            getline( reader, napis );
-            std::cout<<napis<<" "<<napis.length()<<"\n";//napis i jego dlugosc
-            std::cout<<napis.substr(0,2)<<"\n";//substring o starcie w 0 i dlugosci 2
-            */
-           //showAllSeqb("makroprocesor");printf("done");
-            showAllSeq("makroprocesor");
-            std::cout<<locznik<<"\n";
-        /*}
-        reader.close();
-    } 
-    else printf("Dostep do pliku zostal zabroniony!\n");
-    */return 0;
+
+   //sortdict();
+   makeMixedKey();
+   return 0;
 }

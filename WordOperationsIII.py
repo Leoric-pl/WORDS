@@ -139,7 +139,10 @@ def lettersInSeq(short,long):
                 return result
     return result
 
-def getAllcombinationsNEW2(word1,word2):
+def getAllcombinationsNEW2(word1,word2,long,lcomb):
+    if lcomb=='': 
+        ncomb=lettersInSeq(word1+word2,long)
+        if ncomb==word1+word2: return ncomb
     #global licznik
     #licznik+=1    #print(word1+word2)
     for i in range(len(word2)):    
@@ -148,7 +151,12 @@ def getAllcombinationsNEW2(word1,word2):
             for a in range(len(word2)):
                 if a!=i:newseq+=word2[a]
             #print(word1+':  :'+newseq+':')
-            getAllcombinationsNEW2(word1,newseq)
+            ncomb=lettersInSeq(word1+newseq,long)
+            if(len(lcomb)<len(ncomb)):
+                lcomb=ncomb
+            ncomb=getAllcombinationsNEW2(word1,newseq,long,lcomb)
+            if(len((str)(ncomb))>len(lcomb)):
+                lcomb=ncomb
         else:
             newseq1=word1
             newseq2=''
@@ -158,17 +166,29 @@ def getAllcombinationsNEW2(word1,word2):
                 elif i<a: 
                     newseq2+=word2[a]
            # print(newseq1+':  :'+newseq2+':')
-            getAllcombinationsNEW2(newseq1,newseq2)
-def getAllcombinationsNEW(word):
-    #global licznik
-   # licznik+=1
+            ncomb=lettersInSeq(newseq1+newseq2,long)
+            if(len(lcomb)<len(ncomb)):
+                lcomb=ncomb
+            ncomb=getAllcombinationsNEW2(newseq1,newseq2,long,lcomb)
+            if(len((str)(ncomb))>len(lcomb)):
+                lcomb=ncomb
+    return lcomb
+
+def getAllcombinationsNEW(word,long,lcomb):
+    if lcomb=='': 
+        ncomb=lettersInSeq(word,long)
+        if ncomb==word: return ncomb
     for isNot in range(len(word)):    
         if isNot==0:
             newseq=''
             for a in range(len(word)):
                 if a!=isNot:newseq+=word[a]
-            #print(newseq)
-            getAllcombinationsNEW(newseq)
+            ncomb=lettersInSeq(newseq,long)
+            if(len(lcomb)<len(ncomb)):
+                lcomb=ncomb
+            ncomb=getAllcombinationsNEW(newseq,long,lcomb)
+            if(len((str)(ncomb))>len(lcomb)):
+                lcomb=ncomb
         else:
             newseq1=''
             newseq2=''
@@ -178,12 +198,17 @@ def getAllcombinationsNEW(word):
                 elif isNot<a: 
                     newseq2+=word[a]
             #print(newseq1+':  :'+newseq2+':')
-            getAllcombinationsNEW2(newseq1,newseq2)            
+            ncomb=lettersInSeq(newseq1+newseq2,long)
+            if(len(lcomb)<len(ncomb)):
+                lcomb=ncomb
+            ncomb=getAllcombinationsNEW2(newseq1,newseq2,long,lcomb)
+            if(len((str)(ncomb))>len(lcomb)):
+                lcomb=ncomb
+    return lcomb
+                
    
 
 def getAllcombinations(word,long,lcomb):
-    global licznik
-    licznik+=1
     if lcomb=='': 
         ncomb=lettersInSeq(word,long)
         if ncomb==word: return ncomb  
@@ -203,12 +228,13 @@ def getAllcombinations(word,long,lcomb):
     else:return ''
 
 def mergeWords(short,long):
-    commonPart=getAllcombinations(short,long,'')
+    commonPart=getAllcombinationsNEW(short,long,'')
     shortC=0
     longC=0
     CommonP=0
     result=''
     sum=len(short)+len(long)-len(commonPart)
+    #print( short+(str)(len(short))+'  '+(str)(len(long))+long+'  '+(str)(len(commonPart))+commonPart+'  ' )
     for i in range(sum):
         if longC==len(long):
             return result
@@ -220,6 +246,9 @@ def mergeWords(short,long):
             shortC+=1
             longC+=1
             CommonP+=1      
+        elif CommonP==len(commonPart):
+            result+=short[shortC]
+            shortC+=1
         elif short[shortC]==commonPart[CommonP] and long[longC]!=commonPart[CommonP]:
             result+=long[longC]
             longC+=1
@@ -239,15 +268,27 @@ def makeaddingAtEndKey(path):
 #makeaddingAtEndKey("slownik.txt")
 
 def makeMixedKey(path):
-    key=''
+    key=' '
+    countera=0
+    counterb=0
     file=open(path,'r')
     for line in file:
-        print(line)
+        countera+=1
+        if(countera%10000==0):
+            counterb+=1
+            print(counterb)
+
+        #line1=''
+       # for i in range(len(line)-1):
+           # line1+=line[i]
+        #key=mergeWords(line1,key)
         key=mergeWords(line,key)
     file.close()
     print('key: '+key)
-#makeMixedKey("slownik.txt")
+makeMixedKey("slowa/slowaBasedCharacter.txt")
+
+
 
 #getAllcombinationsNEW('makroprocesor')
-getAllcombinations('ma','','')
-print(licznik)
+#getAllcombinationsNEW('makroprocesor','','')
+#print(licznik)
