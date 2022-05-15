@@ -95,7 +95,7 @@ std::string mergeWords(std::string wordA, std::string wordB)
 
 std::string makeMixedKey()
 {
-    std::cout<<"making key!\n";
+    printf("making key!\n");
     std::string key=" ";
     std::string napis;
     int countera=0;
@@ -106,18 +106,22 @@ std::string makeMixedKey()
         {  
             getline(file,napis);
         countera+=1;
-        if(countera%100==0)
+        if(countera%10000==0)
         {
             counterb+=1;
-            std::cout<<counterb<<"\n";
+            printf("%d\n",counterb);
         }
         key=mergeWords(napis,key);
         }
     file.close();
     std::cout<<"key"<<key<<"\n";
+    std::fstream keyF;
+    keyF.open("key.txt", std::ios::app);
+    keyF<<key;
+    keyF.close();
     return key;
 }
-void sortdict()
+void sortdict()//makes dictionary sorted from longest to shortest words
 {
     std::fstream in,out;
     std::string napis;
@@ -132,7 +136,7 @@ void sortdict()
     in.close();
     for (int a=max;a>0;a--)
     {
-        std::cout<<"a: "<<a<<"\n";
+        printf("%d\n",a);
         in.open("slowa/slowaBasedCharacter.txt",std::ios::in);
         while(!in.eof())
         {
@@ -146,7 +150,7 @@ void sortdict()
 int main()
 {
 
-   //sortdict();
+   sortdict();
    makeMixedKey();
    return 0;
 }
