@@ -116,7 +116,7 @@ std::string makeMixedKey()
     file.close();
     std::cout<<"key"<<key<<"\n";
     std::fstream keyF;
-    keyF.open("key.txt", std::ios::app);
+    keyF.open("keys/key.txt", std::ios::app);
     keyF<<key;
     keyF.close();
     return key;
