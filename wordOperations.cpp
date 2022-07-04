@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <conio.h>
+#include <stdio.h>
 #include <string>
 
 std::string WhichInSeq(std::string word1,std::string word2)
@@ -12,6 +12,7 @@ std::string WhichInSeq(std::string word1,std::string word2)
         if(word1[counterS]==word2[conuterL])
         {
             res+=word1[counterS];
+            counterS++;//i think it is neccesary but idk what was purpose ^^
         }
     }
     return res;
@@ -19,29 +20,29 @@ std::string WhichInSeq(std::string word1,std::string word2)
 
 void showAllSeq(std::string word1,std::string word2)
 {
-    for (int a=0;a<word2.length()-1;a++)
+    for (int i=0;i<word2.length()-1;i++)
     {
-        if(a==0)showAllSeq(word1,word2.substr(1,word2.length()-a));
-        else showAllSeq(word1+word2.substr(0,a),word2.substr(a+1,word2.length()-a-1));   
+        if(i==0)showAllSeq(word1,word2.substr(1,word2.length()-i));
+        else showAllSeq(word1+word2.substr(0,i),word2.substr(i+1,word2.length()-i-1));   
     }
 }
 
 void showAllSeq(std::string word)
 {
-    for (int a=0;a<word.length()-1;a++)
+    for (int i=0;i<word.length()-1;i++)
     {
-        if(a==0) showAllSeq(word.substr(1,word.length()-a));
-        else showAllSeq(word.substr(0,a),word.substr(a+1,word.length()-a-1));
+        if(i==0) showAllSeq(word.substr(1,word.length()-i));
+        else showAllSeq(word.substr(0,i),word.substr(i+1,word.length()-i-1));
     }
 }
 std::string getAllSeq(std::string word1,std::string word2,std::string word3,std::string moist)
 {
     std::string most=WhichInSeq(word1+word2,word3);
     if(most.length()>moist.length())moist=most;
-    for (int a=0;a<word2.length()-1;a++)
+    for (int i=0;i<word2.length()-1;i++)
     {
-        if(a==0)most=getAllSeq(word1,word2.substr(1,word2.length()-a),word3,moist);
-        else most=getAllSeq(word1+word2.substr(0,a),word2.substr(a+1,word2.length()-a-1),word3,moist); 
+        if(i==0)most=getAllSeq(word1,word2.substr(1,word2.length()-i),word3,moist);
+        else most=getAllSeq(word1+word2.substr(0,i),word2.substr(i+1,word2.length()-i-1),word3,moist); 
         if(most.length()>moist.length())moist=most;  
     }
     return moist;
@@ -51,10 +52,10 @@ std::string getAllSeq(std::string word,std::string word3,std::string moist)
 {
     std::string most=WhichInSeq(word,word3);
     if(most.length()>moist.length())moist=most;
-    for (int a=0;a<word.length()-1;a++)
+    for (int i=0;i<word.length()-1;i++)
     {
-        if(a==0) most=getAllSeq(word.substr(1,word.length()-a),word3,moist);
-        else most=getAllSeq(word.substr(0,a),word.substr(a+1,word.length()-a-1),word3,moist);
+        if(i==0) most=getAllSeq(word.substr(1,word.length()-i),word3,moist);
+        else most=getAllSeq(word.substr(0,i),word.substr(i+1,word.length()-i-1),word3,moist);
         if(most.length()>moist.length())moist=most;
     }
     return moist;
@@ -92,7 +93,6 @@ std::string mergeWords(std::string wordA, std::string wordB)
     return result;
 }
 
-
 std::string makeMixedKey()
 {
     printf("making key!\n");
@@ -109,12 +109,12 @@ std::string makeMixedKey()
         if(countera%10000==0)
         {
             counterb+=1;
-            printf("%d\n",counterb);
+            std::cout<<counterb<<'\n';
         }
         key=mergeWords(napis,key);
         }
     file.close();
-    std::cout<<"key"<<key<<"\n";
+    std::cout<<"key"<<key<<'\n';
     std::fstream keyF;
     keyF.open("keys/key.txt", std::ios::app);
     keyF<<key;
@@ -134,14 +134,14 @@ void sortdict()//makes dictionary sorted from longest to shortest words
         if(napis.length()>max)max=napis.length();
         }
     in.close();
-    for (int a=max;a>0;a--)
+    for (int i=max;i>0;i--)
     {
-        printf("%d\n",a);
+        std::cout<<i<<'\n';
         in.open("slowa/slowaBasedCharacter.txt",std::ios::in);
         while(!in.eof())
         {
             getline(in,napis);
-            if(napis.length()==a)out<<napis<<"\n";
+            if(napis.length()==i)out<<napis<<"\n";
         }
         in.close();
     }
@@ -149,7 +149,6 @@ void sortdict()//makes dictionary sorted from longest to shortest words
 }
 int main()
 {
-
    sortdict();
    makeMixedKey();
    return 0;
