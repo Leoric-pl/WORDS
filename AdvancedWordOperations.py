@@ -1,7 +1,7 @@
 import time
 from BasicWordOperations import *
 
-def removeFirst(basicpath, newpath, DLetter):
+def remove_first(basicpath, newpath, DLetter):
     modify=open(newpath,'w')
     base=open(basicpath,'r')
     for line in base:
@@ -12,7 +12,7 @@ def removeFirst(basicpath, newpath, DLetter):
     modify.close()
     base.close()
 
-def removeLast(basicpath, newpath, DLetter):
+def remove_last(basicpath, newpath, DLetter):
     modify=open(newpath,'w')
     base=open(basicpath,'r')
     for line in base:
@@ -24,45 +24,45 @@ def removeLast(basicpath, newpath, DLetter):
     base.close()
 
 
-def makeFirstKey(path):
+def make_first_key(path):
     bpath=path+'.txt'
     outpath=path+'FirstKey.txt'
     seq=open(outpath,'a')
-    best=findMostFirstletter(bpath)
+    best=find_most_first_letter(bpath)
     seq.write(best)
-    removeFirst(bpath,cpath,best)
+    remove_first(bpath,cpath,best)
     for a in range(200):
-        best=findMostFirstletter(cpath)
+        best=find_most_first_letter(cpath)
         seq.write(best)
-        removeFirst(cpath,dpath,best)
-        if not isWord(dpath):
+        remove_first(cpath,dpath,best)
+        if not is_word(dpath):
             break
-        best=findMostFirstletter(dpath)
+        best=find_most_first_letter(dpath)
         seq.write(best)
-        removeFirst(dpath,cpath,best)
+        remove_first(dpath,cpath,best)
         if a%50==0: print('processing...'+str(a/2)+'%')
-        if not isWord(cpath):
+        if not is_word(cpath):
             break
     seq.close()
 
-def makeFirstStrong(path):
+def make_first_strong(path):
     bpath=path+'.txt'
     outpath=path+'FirstStrongKey.txt'
     seq=open(outpath,'w')
-    best=findMostFrontFirstletter(bpath)
+    best=find_most_front_first_letter(bpath)
     seq.write(best)
-    removeFirst(bpath,cpath,best)
+    remove_first(bpath,cpath,best)
     for a in range(200):
-        best=findMostFrontFirstletter(cpath)
+        best=find_most_front_first_letter(cpath)
         seq.write(best)
-        removeFirst(cpath,dpath,best)
-        if not isWord(dpath):
+        remove_first(cpath,dpath,best)
+        if not is_word(dpath):
             break
-        best=findMostFrontFirstletter(dpath)
+        best=find_most_front_first_letter(dpath)
         seq.write(best)
-        removeFirst(dpath,cpath,best)
+        remove_first(dpath,cpath,best)
         if a%2==0: print('processing...'+str(a/2)+'%')
-        if not isWord(cpath):
+        if not is_word(cpath):
             break
     seq.close()
 
@@ -70,45 +70,45 @@ def mainFL(path):
     bpath=path+'.txt'
     outpath=path+'FirstLastKey.txt'
     seq=open(outpath,'w')
-    best=findMostFirstletter(bpath)
+    best=find_most_first_letter(bpath)
     keyF=best
     keyL=''
-    removeFirst(bpath,cpath,best)
+    remove_first(bpath,cpath,best)
     for a in range(200):
-        best=findMostLastletter(cpath)
+        best=find_most_last_letter(cpath)
         keyL=best+keyL
-        removeLast(cpath,dpath,best)
-        if not isWord(dpath):
+        remove_last(cpath,dpath,best)
+        if not is_word(dpath):
             break
-        best=findMostFirstletter(dpath)
+        best=find_most_first_letter(dpath)
         keyF+=best
-        removeFirst(dpath,cpath,best)
+        remove_first(dpath,cpath,best)
         if a%2==0: print('processing...'+str(a/2)+'%')
-        if not isWord(cpath):
+        if not is_word(cpath):
             break        
     print('done')    
     seq.write(keyF+keyL)
     seq.close()
 
-def makeFirstStrongLast(path):
+def make_first_strong_last(path):
     bpath=path+'.txt'
     outpath=path+'FirstStrongLastKey.txt'
     seq=open(outpath,'w')
-    best=findMostFrontFirstletter(bpath)
+    best=find_most_front_first_letter(bpath)
     keyF=best
     keyL=''
-    removeFirst(bpath,cpath,best)
+    remove_first(bpath,cpath,best)
     for a in range(200):
-        best=findMostLastletter(cpath)
+        best=find_most_last_letter(cpath)
         keyL=best+keyL
-        removeLast(cpath,dpath,best)
-        if not isWord(dpath):
+        remove_last(cpath,dpath,best)
+        if not is_word(dpath):
             break
-        best=findMostFrontFirstletter(dpath)
+        best=find_most_front_first_letter(dpath)
         keyF+=best
-        removeFirst(dpath,cpath,best)
+        remove_first(dpath,cpath,best)
         if a%2==0: print('processing...'+str(a/2)+'%')
-        if not isWord(cpath):
+        if not is_word(cpath):
             break        
     print('done')    
     seq.write(keyF+keyL)
@@ -120,25 +120,25 @@ def makeXFirstStrong(path):
     bpath=path+'.txt'
     outpath=path+'FirstStrongKey.txt'
     seq=open(outpath,'w')
-    best=findXMostFrontFirstletter(bpath)
+    best=find_enchanced_most_front_first_letter(bpath)
     seq.write(best)
-    removeFirst(bpath,cpath,best)
+    remove_first(bpath,cpath,best)
     for a in range(200):
 
-        best=findXMostFrontFirstletter(cpath)
+        best=find_enchanced_most_front_first_letter(cpath)
         seq.write(best)
-        removeFirst(cpath,dpath,best)
-        if not isWord(dpath):
+        remove_first(cpath,dpath,best)
+        if not is_word(dpath):
             break
         
-        best=findXMostFrontFirstletter(dpath)
+        best=find_enchanced_most_front_first_letter(dpath)
         seq.write(best)
-        removeFirst(dpath,cpath,best)
+        remove_first(dpath,cpath,best)
         eTime=time.time()
         if a%2==0: print('processing...'+str(a/2)+'%')
 
         if(a%20==1):print('estimated time: '+str((eTime-sTime)*(200-a)/(2*a)))
-        if not isWord(cpath):
+        if not is_word(cpath):
             break
     print('done')
     seq.close()
@@ -148,17 +148,17 @@ def pickBestKey(b1path):
     FSpath=b1path+'FirstStrongKey.txt'
     FSLpath=b1path+'FirstStrongLastKey.txt'
     FLpath=b1path+'FirstLastKey.txt'
-    FSLkey=0
-    FSkey=0
-    Fkey=0
-    FLkey=0
+    first_strong_last_key=0
+    first_strong_key=0
+    first_key=0
+    first_last_key=0
     FXkey=0
 
     Fdo=open(Fpath,'r')
     for line in Fdo:
         if(len(line)>1):
-            Fkey=len(line)
-        else: Fkey=10000
+            first_key=len(line)
+        else: first_key=10000
     Fdo.close()
 
     Fdo=open(FSpath,'r')
@@ -171,33 +171,33 @@ def pickBestKey(b1path):
     Fdo=open(FSLpath,'r')
     for line in Fdo:
         if(len(line)>1):
-            FSLkey=len(line)
-        else: FSLkey=10000
+            first_strong_last_key=len(line)
+        else: first_strong_last_key=10000
     Fdo.close()
 
     Fdo=open(FLpath,'r')
     for line in Fdo:
         if(len(line)>1):
-            FLkey=len(line)
-        else: FLkey=10000
+            first_last_key=len(line)
+        else: first_last_key=10000
     Fdo.close()
     Fdo=open(FLpath,'r')
     for line in Fdo:
         if(len(line)>1):
-            FLkey=len(line)
-        else: FLkey=10000
+            first_last_key=len(line)
+        else: first_last_key=10000
     Fdo.close()
 
-    bkey=min(Fkey, FLkey,FSkey,FSLkey,FXkey)
+    bkey=min(first_key, first_last_key,first_strong_key,first_strong_last_key,FXkey)
     print('najkrotszy klucz wynosi:'+str(bkey))
-    if(bkey==Fkey):print('First-key jest najkrotszy')
-    if(bkey==FSkey):print('First-strong-key jest najkrotszy')
-    if(bkey==FSLkey):print('First-strong-lastkey jest najkrotszy')
-    if(bkey==FLkey):print('First-last-key jest najkrotszy')
+    if(bkey==first_key):print('First-key jest najkrotszy')
+    if(bkey==first_strong_key):print('First-strong-key jest najkrotszy')
+    if(bkey==first_strong_last_key):print('First-strong-lastkey jest najkrotszy')
+    if(bkey==first_last_key):print('First-last-key jest najkrotszy')
     
-    print('Fkey:'+str(Fkey))
-    print('FSkey:'+str(FSkey))
-    print('FSLkey:'+str(FSLkey))
-    print('FLkey:'+str(FLkey))
+    print('first_key:'+str(first_key))
+    print('first_strong_key:'+str(first_strong_key))
+    print('first_strong_last_key:'+str(first_strong_last_key))
+    print('first_last_key:'+str(first_last_key))
 
 

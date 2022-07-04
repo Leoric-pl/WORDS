@@ -2,7 +2,7 @@ from AdvancedWordOperations import *
 
 licznik=0
 
-def analyzeString(path, many):
+def analyze_string(path, many):
     seq=open(path,'r')
     i=0
     for line in seq:
@@ -23,7 +23,7 @@ def analyzeString(path, many):
         print(' ')
 
     seq.close()
-def searchsequence(path, sequence):
+def search_sequence(path, sequence):
     bpath=path+'.txt'
     seq=open(bpath,'r')
     i=0
@@ -40,48 +40,33 @@ def searchsequence(path, sequence):
         i+=1
     seq.close()
     return counter
-def checkall(number,text):
+def check_all(number,text):
     if(number>0):
         for a in letters:
-            checkall(number-1,text+a)
-            num=searchsequence('sequence1',text+a)
+            check_all(number-1,text+a)
+            num=search_sequence('sequence1',text+a)
             if(num*(len(text+a))>30):
                 print(str(num)+' '+text+a)
-
-
-####makeLetters() 
-#makeFirstKey(b1path)
-#makeFirstStrongLast(b1path)
-#analyzeString('sequence1',0)
-#analyzeString('sequence1',10)
-#####makeXFirstStrong(b1path)
-#checkall(5,'')
-#pickBestKey(b1path)
 
 def preparedict(path):
     bpath=path+'.txt'
     outpath=path+'Upgraded.txt'
     tempPath='temp.txt'
     seq=open(outpath,'a')
-    basic=open(bpath,'r')
-  #  for line in basic:
-                
+    basic=open(bpath,'r')       
     seq.close()
 
-def pointletters(longSequence, shortSequence):
-    a=len(shortSequence)
+def point_letters(long_sequence, short_sequence):
+    a=len(short_sequence)
     counter=0
     newseq=''
-    for i in range(len(longSequence)):
-        if longSequence[i]==shortSequence[counter]:
+    for i in range(len(long_sequence)):
+        if long_sequence[i]==short_sequence[counter]:
             counter+=1
             newseq+='^'
-            if counter>=len(shortSequence):break
+            if counter>=len(short_sequence):break
         else: newseq+=' '
-  #  print (longSequence)
-  #  print(newseq)
-    if counter==len(shortSequence):
-        #print('success')
+    if counter==len(short_sequence):
         return True
     return False
 def main14no(path):
@@ -92,7 +77,7 @@ def main14no(path):
         print (line)
         i+=1
         short=line
-        itWorked= itWorked and pointletters('neozwsomtaciboariwatyczdaolaicszahyiaejirpaifonsicoeunjyiahminyawitucneywayizhlmisuyoekizyfiamcuoizyebiyojniwcuasjonrieymidzbuenmwkoeiyirwezmuvicnmwhebmuaihomjaoicqamdwcnzjaipokhaigfsl\n',short) 
+        itWorked= itWorked and point_letters('neozwsomtaciboariwatyczdaolaicszahyiaejirpaifonsicoeunjyiahminyawitucneywayizhlmisuyoekizyfiamcuoizyebiyojniwcuasjonrieymidzbuenmwkoeiyirwezmuvicnmwhebmuaihomjaoicqamdwcnzjaipokhaigfsl\n',short) 
         if not itWorked:
             print('error before'+str(i))
             basic.close()
@@ -100,7 +85,7 @@ def main14no(path):
     basic.close()
     return 0
 #main14no('slowa/slowaBasedCharacter.txt')
-def errorNumbers(path,key):
+def error_numbers(path,key):
     i=0
     basic=open(path,'r')
     itWorked=True
@@ -108,10 +93,8 @@ def errorNumbers(path,key):
     bad=0
     for line in basic:
         i+=1
-        #print (line)
-        
         short=line
-        res= pointletters(key,short) 
+        res= point_letters(key,short) 
         if res:
             good+=1
         else: bad+=1
@@ -120,28 +103,27 @@ def errorNumbers(path,key):
             print('rate: '+ str(good)+' / '+str(good+bad)+' :'+str(good/(good+bad)))
             return 1
     basic.close()
-    #print('rate:'+ good+' / '+good+bad+' :'+good/(good+bad))
     return 0
 
-#errorNumbers('slowa/slowaBasedCharacter.txt','neozsdolmurpcbsairoagtculozejnkwcyhiasmzepainweiyzfoigtdayijeykcozlnytimjeckwloiyechsmwyuedazimyaismycjhoezmaiyoemaeuzrgicsneyiojcietsyoaimrwioyemszgweymaheokmasweacyieaoiuhoneidwyeaiocweuckoyz\n')
-#errorNumbers('slowa/slowaBasedCharacter.txt','neozwsomtaciboariwatyczdaolaicszahyiaejirpaifonsicoeunjyiahminyawitucneywayizhlmisuyoekizyfiamcuoizyebiyojniwcuasjonrieymidzbuenmwkoeiyirwezmuvicnmwhebmuaihomjaoicqamdwcnzjaipokhaigfsl\n')
+#error_numbers('slowa/slowaBasedCharacter.txt','neozsdolmurpcbsairoagtculozejnkwcyhiasmzepainweiyzfoigtdayijeykcozlnytimjeckwloiyechsmwyuedazimyaismycjhoezmaiyoemaeuzrgicsneyiojcietsyoaimrwioyemszgweymaheokmasweacyieaoiuhoneidwyeaiocweuckoyz\n')
+#error_numbers('slowa/slowaBasedCharacter.txt','neozwsomtaciboariwatyczdaolaicszahyiaejirpaifonsicoeunjyiahminyawitucneywayizhlmisuyoekizyfiamcuoizyebiyojniwcuasjonrieymidzbuenmwkoeiyirwezmuvicnmwhebmuaihomjaoicqamdwcnzjaipokhaigfsl\n')
 
-def lettersInSeq(short,long):
+def letters_in_seq(short,long):
     result=''
-    currS=0
+    curr_s=0
     for i in long:
-        if(currS==len(short)):
+        if(curr_s==len(short)):
             return result
-        elif(short[currS]==i):
-            result+=short[currS]
-            currS+=1
-            if(currS==len(short)):
+        elif(short[curr_s]==i):
+            result+=short[curr_s]
+            curr_s+=1
+            if(curr_s==len(short)):
                 return result
     return result
 
-def getAllcombinationsNEW2(word1,word2,long,lcomb):
+def get_all_combinations_new2(word1,word2,long,lcomb):
     if lcomb=='': 
-        ncomb=lettersInSeq(word1+word2,long)
+        ncomb=letters_in_seq(word1+word2,long)
         if ncomb==word1+word2: return ncomb
     #global licznik
     #licznik+=1    #print(word1+word2)
@@ -151,10 +133,10 @@ def getAllcombinationsNEW2(word1,word2,long,lcomb):
             for a in range(len(word2)):
                 if a!=i:newseq+=word2[a]
             #print(word1+':  :'+newseq+':')
-            ncomb=lettersInSeq(word1+newseq,long)
+            ncomb=letters_in_seq(word1+newseq,long)
             if(len(lcomb)<len(ncomb)):
                 lcomb=ncomb
-            ncomb=getAllcombinationsNEW2(word1,newseq,long,lcomb)
+            ncomb=get_all_combinations_new2(word1,newseq,long,lcomb)
             if(len((str)(ncomb))>len(lcomb)):
                 lcomb=ncomb
         else:
@@ -166,51 +148,50 @@ def getAllcombinationsNEW2(word1,word2,long,lcomb):
                 elif i<a: 
                     newseq2+=word2[a]
            # print(newseq1+':  :'+newseq2+':')
-            ncomb=lettersInSeq(newseq1+newseq2,long)
+            ncomb=letters_in_seq(newseq1+newseq2,long)
             if(len(lcomb)<len(ncomb)):
                 lcomb=ncomb
-            ncomb=getAllcombinationsNEW2(newseq1,newseq2,long,lcomb)
+            ncomb=get_all_combinations_new2(newseq1,newseq2,long,lcomb)
             if(len((str)(ncomb))>len(lcomb)):
                 lcomb=ncomb
     return lcomb
 
-def getAllcombinationsNEW(word,long,lcomb):
+def get_all_combinations_new(word,long,lcomb):
     if lcomb=='': 
-        ncomb=lettersInSeq(word,long)
+        ncomb=letters_in_seq(word,long)
         if ncomb==word: return ncomb
-    for isNot in range(len(word)):    
-        if isNot==0:
+    for is_not in range(len(word)):    
+        if is_not==0:
             newseq=''
-            for a in range(len(word)):
-                if a!=isNot:newseq+=word[a]
-            ncomb=lettersInSeq(newseq,long)
+            for i in range(len(word)):
+                if i!=is_not:newseq+=word[i]
+            ncomb=letters_in_seq(newseq,long)
             if(len(lcomb)<len(ncomb)):
                 lcomb=ncomb
-            ncomb=getAllcombinationsNEW(newseq,long,lcomb)
+            ncomb=get_all_combinations_new(newseq,long,lcomb)
             if(len((str)(ncomb))>len(lcomb)):
                 lcomb=ncomb
         else:
             newseq1=''
             newseq2=''
             for a in range(len( word)):
-                if a<isNot: 
+                if a<is_not: 
                     newseq1+=word[a]
-                elif isNot<a: 
+                elif is_not<a: 
                     newseq2+=word[a]
-            #print(newseq1+':  :'+newseq2+':')
-            ncomb=lettersInSeq(newseq1+newseq2,long)
+            ncomb=letters_in_seq(newseq1+newseq2,long)
             if(len(lcomb)<len(ncomb)):
                 lcomb=ncomb
-            ncomb=getAllcombinationsNEW2(newseq1,newseq2,long,lcomb)
+            ncomb=get_all_combinations_new2(newseq1,newseq2,long,lcomb)
             if(len((str)(ncomb))>len(lcomb)):
                 lcomb=ncomb
     return lcomb
                 
    
 
-def getAllcombinations(word,long,lcomb):
+def get_all_combinations(word,long,lcomb):
     if lcomb=='': 
-        ncomb=lettersInSeq(word,long)
+        ncomb=letters_in_seq(word,long)
         if ncomb==word: return ncomb  
     if(len(word)>=2):
         for i in range(len(word)):
@@ -218,23 +199,22 @@ def getAllcombinations(word,long,lcomb):
             for j in range(len(word)):
                 if(i!=j):#only one for each i
                     newW+=word[j]
-            ncomb=lettersInSeq(newW,long)
+            ncomb=letters_in_seq(newW,long)
             if(len(lcomb)<len(ncomb)):
                 lcomb=ncomb
-            ncomb=getAllcombinations(newW,long,lcomb)
+            ncomb=get_all_combinations(newW,long,lcomb)
             if(len((str)(ncomb))>len(lcomb)):
                 lcomb=ncomb
         return lcomb
     else:return ''
 
 def mergeWords(short,long):
-    commonPart=getAllcombinationsNEW(short,long,'')
+    commonPart=get_all_combinations_new(short,long,'')
     shortC=0
     longC=0
     CommonP=0
     result=''
     sum=len(short)+len(long)-len(commonPart)
-    #print( short+(str)(len(short))+'  '+(str)(len(long))+long+'  '+(str)(len(commonPart))+commonPart+'  ' )
     for i in range(sum):
         if longC==len(long):
             return result
@@ -256,16 +236,16 @@ def mergeWords(short,long):
             result+=short[shortC]
             shortC+=1
     return result 
-#print(getAllcombinations('aledsfisdfn','mbafuosfnljsufnpwldkaemo',''))
-def makeaddingAtEndKey(path):
+#print(get_all_combinations('aledsfisdfn','mbafuosfnljsufnpwldkaemo',''))
+def makeadding_atEndKey(path):
     key=''
     file=open(path,'r')
     for line in file:
-        for i in range(len(lettersInSeq(line,key)),len(line)-1):
+        for i in range(len(letters_in_seq(line,key)),len(line)-1):
             key+=line[i]
     file.close()
     print('key: '+key)
-#makeaddingAtEndKey("slownik.txt")
+#makeadding_atEndKey("slownik.txt")
 
 def makeMixedKey(path):
     key=' '
@@ -289,6 +269,6 @@ makeMixedKey("slowa/slowaBasedCharacter.txt")
 
 
 
-#getAllcombinationsNEW('makroprocesor')
-#getAllcombinationsNEW('makroprocesor','','')
+#get_all_combinations_new('makroprocesor')
+#get_all_combinations_new('makroprocesor','','')
 #print(licznik)
