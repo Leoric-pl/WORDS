@@ -158,8 +158,7 @@ string generate30FullWritting(string tresc,int height)
     return res;
 }
 void AutoScale(string tresc)
-{
-    
+{   
     int numberOfWords=countInString(tresc," ")+1;
     cout<<numberOfWords<<"\n";
     string word[5]={"","","","",""};

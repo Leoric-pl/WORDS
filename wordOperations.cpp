@@ -104,7 +104,7 @@ std::string makeMixedKey()
     file.open("slowa/byLength.txt",std::ios::in);
     while(!file.eof())
         {  
-            getline(file,napis);
+        getline(file,napis);
         countera+=1;
         if(countera%10000==0)
         {
@@ -145,11 +145,11 @@ void sortdict()//makes dictionary sorted from longest to shortest words
         }
         in.close();
     }
-
+    std::cout<<"words sorted\n";
 }
 int main()
 {
-   sortdict();
+   //sortdict();
    makeMixedKey();
    return 0;
 }

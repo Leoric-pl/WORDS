@@ -21,8 +21,8 @@ def analyze_string(path, many):
         MyMax=min(table)
         print('min: '+letters[table.index(MyMax)]+' : '+str(MyMax))
         print(' ')
-
     seq.close()
+    
 def search_sequence(path, sequence):
     bpath=path+'.txt'
     seq=open(bpath,'r')
@@ -57,7 +57,6 @@ def preparedict(path):
     seq.close()
 
 def point_letters(long_sequence, short_sequence):
-    a=len(short_sequence)
     counter=0
     newseq=''
     for i in range(len(long_sequence)):
@@ -88,7 +87,6 @@ def main14no(path):
 def error_numbers(path,key):
     i=0
     basic=open(path,'r')
-    itWorked=True
     good=0
     bad=0
     for line in basic:
@@ -105,7 +103,7 @@ def error_numbers(path,key):
     basic.close()
     return 0
 
-#error_numbers('slowa/slowaBasedCharacter.txt','neozsdolmurpcbsairoagtculozejnkwcyhiasmzepainweiyzfoigtdayijeykcozlnytimjeckwloiyechsmwyuedazimyaismycjhoezmaiyoemaeuzrgicsneyiojcietsyoaimrwioyemszgweymaheokmasweacyieaoiuhoneidwyeaiocweuckoyz\n')
+error_numbers('WORDS/slowa/slowaBasedCharacter.txt','zawtsurpopnamkosydjiejhgrzaflemapkgdzwcyothbusribheazgsjwrptpnndaliolfecsukatoykdrcyoszbehgwmpafiqnelrondiawocjhbuszutykordmjeangxptahnulirwschjecopmagffedyusktrylcjebionlwiaftykwmerainozcpolasfzymytabnkuplrgiewvrurjdesafbncczhatyrliusbonemzogwydtcrskitanlearbyiopskczjnyidboswacekmiiaujgaowenachyza')
 #error_numbers('slowa/slowaBasedCharacter.txt','neozwsomtaciboariwatyczdaolaicszahyiaejirpaifonsicoeunjyiahminyawitucneywayizhlmisuyoekizyfiamcuoizyebiyojniwcuasjonrieymidzbuenmwkoeiyirwezmuvicnmwhebmuaihomjaoicqamdwcnzjaipokhaigfsl\n')
 
 def letters_in_seq(short,long):
@@ -125,14 +123,11 @@ def get_all_combinations_new2(word1,word2,long,lcomb):
     if lcomb=='': 
         ncomb=letters_in_seq(word1+word2,long)
         if ncomb==word1+word2: return ncomb
-    #global licznik
-    #licznik+=1    #print(word1+word2)
     for i in range(len(word2)):    
         if i==0:
             newseq=''
             for a in range(len(word2)):
                 if a!=i:newseq+=word2[a]
-            #print(word1+':  :'+newseq+':')
             ncomb=letters_in_seq(word1+newseq,long)
             if(len(lcomb)<len(ncomb)):
                 lcomb=ncomb
@@ -147,7 +142,6 @@ def get_all_combinations_new2(word1,word2,long,lcomb):
                     newseq1+=word2[a]
                 elif i<a: 
                     newseq2+=word2[a]
-           # print(newseq1+':  :'+newseq2+':')
             ncomb=letters_in_seq(newseq1+newseq2,long)
             if(len(lcomb)<len(ncomb)):
                 lcomb=ncomb
@@ -186,8 +180,6 @@ def get_all_combinations_new(word,long,lcomb):
             if(len((str)(ncomb))>len(lcomb)):
                 lcomb=ncomb
     return lcomb
-                
-   
 
 def get_all_combinations(word,long,lcomb):
     if lcomb=='': 
@@ -209,6 +201,7 @@ def get_all_combinations(word,long,lcomb):
     else:return ''
 
 def mergeWords(short,long):
+    if letters_in_seq(short,long)==short:return long
     commonPart=get_all_combinations_new(short,long,'')
     shortC=0
     longC=0
@@ -248,27 +241,24 @@ def makeadding_atEndKey(path):
 #makeadding_atEndKey("slownik.txt")
 
 def makeMixedKey(path):
-    key=' '
+    key=''
     countera=0
     counterb=0
     file=open(path,'r')
     for line in file:
         countera+=1
-        if(countera%10000==0):
+        key=mergeWords(line,key)
+        if(countera%1000==0):
             counterb+=1
             print(counterb)
-
-        #line1=''
-       # for i in range(len(line)-1):
-           # line1+=line[i]
-        #key=mergeWords(line1,key)
-        key=mergeWords(line,key)
+            tempkey=open('WORDS/keys/temporary_key.txt','a')
+            tempkey.write(key)
+            tempkey.close()
     file.close()
     print('key: '+key)
-makeMixedKey("slowa/slowaBasedCharacter.txt")
-
-
-
+#makeMixedKey("WORDS/slowa/slowaBasedCharacter.txt")
 #get_all_combinations_new('makroprocesor')
 #get_all_combinations_new('makroprocesor','','')
 #print(licznik)
+#dcyothburibheazsjwrptpndalolfesukatoykdrcyoszbehgmpafiqnelrondiawochbuszutykordmjeangxptahnulirwschjecopmagffedyusktrylcjebionlwiaftykwmerainozcpolasfzymytabnkuplrgiewvrurjdesafbncczhatyrliusbonemzogwydtcrskitanlearbyiopskczjnyidboswacekmiiaujgaowenachyza
+#zawtsurpopnamkosydjiejhgrzaflemapkgdzwcyothbusribheazgsjwrptpnndaliolfecsukatoykdrcyoszbehgwmpafiqnelrondiawocjhbuszutykordmjeangxptahnulirwschjecopmagffedyusktrylcjebionlwiaftykwmerainozcpolasfzymytabnkuplrgiewvrurjdesafbncczhatyrliusbonemzogwydtcrskitanlearbyiopskczjnyidboswacekmiiaujgaowenachyza
